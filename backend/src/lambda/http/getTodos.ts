@@ -3,14 +3,15 @@ import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
 import { parseUserId } from '../../auth/utils';
 
-var AWS = require("aws-sdk");
+const AWS = require("aws-sdk");
 
 
-var docClient = new AWS.DynamoDB.DocumentClient();
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 const todosTableName = process.env.TODOS_TABLE;
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  console.log('Processing event: ', event)
 
   const authHeader = event.headers.Authorization
   const authSplit = authHeader.split(" ")
