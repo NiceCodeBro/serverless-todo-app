@@ -1,7 +1,7 @@
 Table of Contents
 =================
-<!--ts-->
    * [Functionality of the application](#functionality-of-the-application)
+   * [Demo](#demo)
    * [TODO items](#todo-items)
       * [Technologies, services and concepts used](#technologies-services-and-concepts-used)
    * [Frontend](#frontend)
@@ -23,6 +23,10 @@ This application will allow creating/removing/updating/fetching TODO items. Each
 6. Auth0 as authentication
 7. Serverless Framework
 8. React
+
+
+# Demo
+<img src="assets/demo.gif" alt="Demo" width="650"/>
 
 # TODO items
 
@@ -86,7 +90,8 @@ This should start a development server with the React application that will inte
 - Implement a new endpoint that allows sending full-text search requests to Elasticsearch
 - Implementation pagination support to work around a DynamoDB limitation up to 1 MB
 - Add an ability to sort TODOs by due date or priority
-- Performance improvments: Reduce the cold start with plugin
+- Use middy middleware to increase code re-use
+- Performance improvements: Reduce the cold start with plugin
 - Use AWS X-Ray for monitoring and troubleshooting
 - Each function has its own set of permissions
 - Decrease the size of dependencies and increase performance of functions
