@@ -1,6 +1,6 @@
 import * as AWS  from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
-import {TodoItem} from '../models/TodoItem';
+import { TodoItem } from '../models/TodoItem';
 
 export class TodoAccess {
   constructor(
@@ -18,6 +18,16 @@ export class TodoAccess {
       }).promise()
 
     return todoItem;
+  }
+
+  async deleteTodo(todoId: string, userId: string): Promise<any> {
+    await this.docClient.delete({
+      TableName: this.todosTableName,
+      Key: {
+        "userId": userId,
+        "todoId": todoId
+      }
+    }).promise();
   }
 }
 

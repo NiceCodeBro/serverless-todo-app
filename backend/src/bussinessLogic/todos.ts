@@ -24,3 +24,8 @@ export async function createTodo(
 
   return await todoAccess.createTodo(newItem);
 }
+
+export async function deleteTodo(todoId: string, userId: string): Promise<any> {
+  return await todoAccess.deleteTodo(todoId, userId);
+}
+
