@@ -5,7 +5,8 @@ import { TodoItem } from '../models/TodoItem';
 export class TodoAccess {
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
-    private readonly todosTableName = process.env.TODOS_TABLE) {
+    private readonly todosTableName = process.env.TODOS_TABLE,
+    private readonly userIdIndex = process.env.USER_ID_INDEX) {
   }
 
   async createTodo(todoItem: TodoItem): Promise<TodoItem> {
@@ -27,6 +28,18 @@ export class TodoAccess {
         "userId": userId,
         "todoId": todoId
       }
+    }).promise();
+  }
+
+  async getTodos(userId: string): Promise<any> {
+    return await this.docClient.query({
+      TableName : this.todosTableName,
+      IndexName: this.userIdIndex,
+      KeyConditionExpression: 'userId = :userId',
+      ExpressionAttributeValues: {
+          ':userId': userId
+      },
+      ScanIndexForward: false
     }).promise();
   }
 }
