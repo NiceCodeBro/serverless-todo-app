@@ -3,11 +3,7 @@ import 'source-map-support/register';
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest';
 import { getUserId } from '../utils';
-
-const AWS = require("aws-sdk");
-
-const docClient = new AWS.DynamoDB.DocumentClient();
-const todosTableName = process.env.TODOS_TABLE;
+import { updateTodo } from '../../bussinessLogic/todos';
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
@@ -17,34 +13,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   const updatedTodo: UpdateTodoRequest = JSON.parse(event.body);
   const userId = getUserId(event);
 
-  const params = {
-    TableName: todosTableName,
-    Key: {
-      "todoId": todoId,
-      "userId": userId
-    },
-    UpdateExpression: "set #name = :name, #dueDate=:dueDate, #done=:done",
-    ExpressionAttributeValues: {
-      ":name": updatedTodo.name,
-      ":dueDate": updatedTodo.dueDate,
-      ":done": updatedTodo.done
-    },
-    ExpressionAttributeNames: {
-      "#name": "name",
-      "#dueDate": "dueDate",
-      "#done": "done"
-    },
-    ReturnValues: "UPDATED_NEW"
-  }
-
   try {
-    const updatedTodo = await docClient.update(params, function(err, data) {
-      if (err) {
-          console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
-      } else {
-          console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
-      }
-  }).promise();
+    await updateTodo(updatedTodo, todoId, userId);
 
     return {
       statusCode: 204,

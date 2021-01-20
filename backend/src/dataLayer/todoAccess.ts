@@ -1,6 +1,7 @@
 import * as AWS  from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { TodoItem } from '../models/TodoItem';
+import { TodoUpdate } from '../models/TodoUpdate';
 
 export class TodoAccess {
   constructor(
@@ -42,6 +43,42 @@ export class TodoAccess {
       ScanIndexForward: false
     }).promise();
   }
+
+  async updateTodo(todoItem: TodoItem): Promise<any> {
+
+    const updateExpression = "set #name = :name, #dueDate=:dueDate, #done=:done";
+
+    const params = {
+      TableName: this.todosTableName,
+      Key: {
+        "todoId": todoItem.todoId,
+        "userId": todoItem.userId
+      },
+      UpdateExpression: updateExpression,
+      ExpressionAttributeValues: {
+        ":name": todoItem.name,
+        ":dueDate": todoItem.dueDate,
+        ":done": todoItem.done
+      },
+      ExpressionAttributeNames: {
+        "#name": "name",
+        "#dueDate": "dueDate",
+        "#done": "done"
+      },
+      ReturnValues: "UPDATED_NEW"
+    }
+
+    await this.docClient.update(params, function(err, data) {
+        if (err) {
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+        }
+    }).promise();
+
+    return todoItem;
+  }
+
 }
 
 function createDynamoDBClient() {

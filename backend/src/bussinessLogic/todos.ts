@@ -4,11 +4,12 @@ import { TodoItem } from '../models/TodoItem'
 import { TodoAccess } from '../dataLayer/todoAccess'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { parseUserId } from '../auth/utils';
+import { TodoUpdate } from '../models/TodoUpdate';
 
 const todoAccess = new TodoAccess()
 
 export async function createTodo(
-    createTodoRequest: CreateTodoRequest,
+  createTodoRequest: CreateTodoRequest,
   jwtToken: string
 ): Promise<TodoItem> {
 
@@ -31,4 +32,15 @@ export async function deleteTodo(todoId: string, userId: string): Promise<any> {
 
 export async function getTodos(userId: string): Promise<any> {
   return await todoAccess.getTodos(userId);
+}
+
+export async function updateTodo(todoUpdate: TodoUpdate, todoId: string, userId: string) {
+  return await todoAccess.updateTodo({
+    todoId,
+    userId,
+    name: todoUpdate.name,
+    dueDate: todoUpdate.dueDate,
+    done: todoUpdate.done,
+    createdAt: new Date().toISOString()
+  })
 }
