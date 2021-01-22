@@ -84,8 +84,6 @@ npm run start
 This should start a development server with the React application that will interact with the serverless TODO application.
 
 # What to do
-- Update the photo link uploaded to S3 in todo table
-- Split the code into multiple layers separating business logic from I/O related code
 - Integrate te Winston logger instead of console.logs
 - Implement a new endpoint that allows sending full-text search requests to Elasticsearch
 - Implementation pagination support to work around a DynamoDB limitation up to 1 MB
