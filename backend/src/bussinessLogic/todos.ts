@@ -1,12 +1,13 @@
 import * as uuid from 'uuid'
-
 import { TodoItem } from '../models/TodoItem'
 import { TodoAccess } from '../dataLayer/todoAccess'
+import { BucketAccess } from '../dataLayer/bucketAccess'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { parseUserId } from '../auth/utils';
 import { TodoUpdate } from '../models/TodoUpdate';
 
-const todoAccess = new TodoAccess()
+const todoAccess = new TodoAccess();
+const bucketAccess = new BucketAccess();
 
 export async function createTodo(
   createTodoRequest: CreateTodoRequest,
@@ -43,4 +44,17 @@ export async function updateTodo(todoUpdate: TodoUpdate, todoId: string, userId:
     done: todoUpdate.done,
     createdAt: new Date().toISOString()
   })
+}
+
+export async function attachUrl(userId: string, todoId: string) {
+  const url = bucketAccess.getImageUrl(todoId);
+  await todoAccess.updateUrl(userId, url, todoId);
+}
+
+export async function getPresignedUrl(imageId: uuid){
+  console.log("image id in getpresigned url:", imageId);
+  const presignedUrl = bucketAccess.getPutSignedUrl(imageId);
+  console.log("presigned url:", presignedUrl);
+
+  return presignedUrl;
 }
