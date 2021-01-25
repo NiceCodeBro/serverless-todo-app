@@ -5,6 +5,16 @@ plugins:
   - serverless-iam-roles-per-function
 
 provider:
+  tracing:
+    lambda: true
+    apiGateway: true
+    iamRoleStatements:
+      - Effect: 'Allow' # xray permissions (required)
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
   name: aws
   runtime: nodejs12.x
   

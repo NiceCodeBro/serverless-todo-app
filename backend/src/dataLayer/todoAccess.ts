@@ -2,6 +2,9 @@ import * as AWS  from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { TodoItem } from '../models/TodoItem';
 
+const AWSXRay = require('aws-xray-sdk');
+const XAWS = AWSXRay.captureAWS(AWS);
+
 export class TodoAccess {
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
@@ -105,5 +108,6 @@ export class TodoAccess {
 }
 
 function createDynamoDBClient() {
-  return new AWS.DynamoDB.DocumentClient();
+  console.log("Creating Todos DynamoDB Client...");
+  return new XAWS.DynamoDB.DocumentClient()
 }
