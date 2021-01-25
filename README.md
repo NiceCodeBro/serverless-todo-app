@@ -2,6 +2,7 @@ Table of Contents
 =================
    * [Functionality of the application](#functionality-of-the-application)
    * [Demo](#demo)
+   * [Aws-Xray Map](#aws-xray-map)
    * [TODO items](#todo-items)
       * [Technologies, services and concepts used](#technologies-services-and-concepts-used)
    * [Frontend](#frontend)
@@ -20,13 +21,17 @@ This application will allow creating/removing/updating/fetching TODO items. Each
 3. AWS DynamoDB - NoSQL Database
 4. AWS Api Gateway
 5. AWS CloudFormation
-6. Auth0 as authentication
-7. Serverless Framework
-8. React
+6. AWS Xray
+7. Auth0 as authentication
+8. Serverless Framework
+9. React
 
 
 # Demo
 <img src="assets/demo.gif" alt="Demo" width="650"/>
+
+# AWS Xray Map
+<img src="assets/Aws-Xray.jpg" alt="XrayDemo" width="650"/>
 
 # TODO items
 
@@ -90,7 +95,6 @@ This should start a development server with the React application that will inte
 - Add an ability to sort TODOs by due date or priority
 - Use middy middleware to increase code re-use
 - Performance improvements: Reduce the cold start with plugin
-- Use AWS X-Ray for monitoring and troubleshooting
 - Each function has its own set of permissions
 - Decrease the size of dependencies and increase performance of functions
 - Canary Deployment
