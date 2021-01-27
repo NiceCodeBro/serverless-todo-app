@@ -20,7 +20,7 @@
     "@types/node": "^10.17.51",
     "aws-sdk": "^2.702.0",
     "serverless-aws-documentation": "^1.1.0",
-    "serverless-iam-roles-per-function": "^1.0.4",
+    "serverless-iam-roles-per-function": "^3.1.1-720dc0f",
     "serverless-plugin-canary-deployments": "^0.4.8",
     "serverless-reqvalidator-plugin": "^1.0.4",
     "serverless-webpack": "^5.3.5",
