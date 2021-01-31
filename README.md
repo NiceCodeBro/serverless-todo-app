@@ -15,6 +15,9 @@ Table of Contents
 
 This application will allow creating/removing/updating/fetching TODO items. Each TODO item can optionally have an attachment image. Each user only has access to TODO items that he/she has created.
 
+
+The main project purpose was to complete [a initial project](https://github.com/udacity/cloud-developer/tree/master/course-04/project/c4-final-project-starter-code) with some best practices.
+
 ## Technologies, services and concepts used
 1. AWS Lambda as Serverless Compute Service 
 2. AWS Simple Storage Service (S3) as File Storage
@@ -89,7 +92,6 @@ npm run start
 This should start a development server with the React application that will interact with the serverless TODO application.
 
 # What to do
-- Integrate te Winston logger instead of console.logs
 - Implement a new endpoint that allows sending full-text search requests to Elasticsearch
 - Implementation pagination support to work around a DynamoDB limitation up to 1 MB
 - Add an ability to sort TODOs by due date or priority
