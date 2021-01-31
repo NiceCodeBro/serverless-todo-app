@@ -1,7 +1,9 @@
 import * as AWS  from 'aws-sdk';
 import * as AWSXRay from 'aws-xray-sdk';
+import { createLogger } from '../utils/logger';
 
 const XAWS = AWSXRay.captureAWS(AWS);
+const logger = createLogger('bucketAccess');
 
 export class BucketAccess {
   constructor(
@@ -18,12 +20,21 @@ export class BucketAccess {
             Bucket: this.todosImagesBucketName,
             Key: key,
             Expires: parseInt(this.signedUrlExpireSeconds),
+        }, function(err, url) {
+          if (err) {
+            logger.info('getPutSignedUrl, error on getting put url', {error: err});
+          } else {
+            logger.info('getPutSignedUrl, a put url is generated', {presignedUrl: presignedUrl});
+          }
         });
 
         return presignedUrl;
     }
 
   getImageUrl(imageId){
-      return `https://${this.todosImagesBucketName}.s3.amazonaws.com/${imageId}`;
+      const url = `https://${this.todosImagesBucketName}.s3.amazonaws.com/${imageId}`;
+      logger.info('getImageUrl', {imageUrl: url});
+
+      return url;
   }
 }
